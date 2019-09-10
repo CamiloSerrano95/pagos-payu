@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Paga con PAYU</title>
+</head>
+<body>
+    <h1>PAYU</h1>
+    <input type="email" id="email" namw="email" placeholder="Tu correo electronico"><br>
+    <input type="text" id="amount" name="amount" placeholder="Cuanto vas a pagar?"><br>
+    <button id="Pagar">Confirmar</button>
+    <div id="Confirmar"></div>
+
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+    <script>
+        $('#Pagar').click(function (e){
+            e.preventDefault();
+            var amount = $("#amount").val();
+            var email = $("#email").val();
+
+            datos = { 
+                "amount": amount,
+                "email": email
+            };
+
+            $.ajax({
+                url: "pago.php",
+                type: "POST",
+                data: datos
+            })
+            .done(function (respuesta) {
+               var res = JSON.parse(respuesta);
+               console.log(res);
+               $("#Pagar").remove();
+               $("#Confirmar").html(res.button);
+            });
+        });
+    </script>
+</body>
+</html>
